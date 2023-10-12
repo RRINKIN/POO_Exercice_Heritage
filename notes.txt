@@ -1,3 +1,2 @@
 PSR-4 autoloading configured. Use "namespace Poo\HeritageComposer;" in src/
 Include the Composer autoloader with: require 'vendor/autoload.php';
-SSH Git: https://github.com/RRINKIN/POO_Exercice_Heritage.git
