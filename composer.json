@@ -1,0 +1,17 @@
+{
+    "name": "poo/heritage_composer",
+    "description": "Exercice recapitulatif de la matiere POO",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Poo\\HeritageComposer\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "KLEYER",
+            "email": "38478356+RRINKIN@users.noreply.github.com"
+        }
+    ],
+    "require": {}
+}
