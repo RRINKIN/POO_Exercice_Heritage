@@ -3,6 +3,7 @@
 require 'vendor/autoload.php';
 use Poo\HeritageComposer\Entity\Etudiant;
 use Poo\HeritageComposer\Entity\Enseignant;
+use Poo\HeritageComposer\Manager\EnseignantManager;
 
 // élève
 try {
@@ -36,6 +37,7 @@ try {
 try {
     // Créer un nouvel enseigna,t
     $newEnseignant = new Enseignant();
+
     // Affecter les valeurs aux propriétés de l'étudiant
     $newEnseignant->setName("TestNom");
     $newEnseignant->setPrenom("TestPrenom");
@@ -55,6 +57,10 @@ try {
     echo "Affichage avec __toString:";
     echo $newEnseignant;
     echo "<br>";
+
+    // Create manager
+    $enseignantManager = new EnseignantManager();
+    $enseignantManager->create($newEnseignant);
 
 } catch (Exception $e) {
     echo $e->getMessage();

@@ -65,7 +65,6 @@ class Enseignant extends Personne implements Affichable {
             array_push($listOfErrors, "Pas de date d'ancienneté");
         };
         
-
         // exception in case of any attribute is missing
         if (!empty($listOfErrors)){
             var_dump($listOfErrors);
@@ -73,10 +72,18 @@ class Enseignant extends Personne implements Affichable {
         }
 
         // coursDonnes from array to string using join
-        $newCoursDonnes = \join(",", $this->coursDonnes);
+        $data = $this->coursDonnes;
+        if( \gettype($data) == 'string') {
+            $data = unserialize($data);
+        }
+        $newCoursDonnes = \join(",", $data);
 
         // entreeService from DateTime object to string using format
-        $newEntreeService = $this->entreeEnService->format("d-m-Y");
+        $data = $this->entreeEnService;
+        if( \gettype($data) == 'string') {
+            $data = DateTime::createFromFormat('Y-m-d', $data);
+        }
+        $newEntreeService = $data->format("d-m-Y");
 
         $newResume = 
             $this->id." ".
