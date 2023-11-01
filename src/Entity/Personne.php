@@ -66,4 +66,3 @@ abstract class Personne{
     // méthode abstaite retournant les informations de l'objet
     abstract public function resume();
 }
-?>

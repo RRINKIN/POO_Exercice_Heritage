@@ -4,8 +4,9 @@ namespace Poo\HeritageComposer\Entity;
 use DateTime;
 use Exception;
 
+
 // classes
-class Etudiant extends Personne {
+class Etudiant extends Personne implements Affichable {
 
     // Attributes
     private $coursSuivis = [];
@@ -25,7 +26,7 @@ class Etudiant extends Personne {
     public function setNiveau(string $newNiveau){
         $this->niveau = $newNiveau;
     }
-    public function getdateInscription(){
+    public function getDateInscription(){
         return $this->dateInscription;
     }
     public function setDateInscription(DateTime $newDateInscription){
@@ -34,6 +35,50 @@ class Etudiant extends Personne {
 
     // Autres methodes
     public function resume(){
+        // check for empty fields
+        $listOfErrors = [];
+        if (empty($this->nom)) {
+            array_push($listOfErrors, "Pas de nom");
+        }
+        if (empty($this->prenom)) {
+            array_push($listOfErrors, "Pas de prénom");
+        } 
+        if (empty($this->adresse)) {
+            array_push($listOfErrors, "Pas d'addresse'");
+        } 
+        if (empty($this->codePostal)) {
+            array_push($listOfErrors, "Pas de code postal");
+        } 
+        if (empty($this->pays)) {
+            array_push($listOfErrors, "Pas de pays");
+        } 
+        if (empty($this->societe)) {
+            array_push($listOfErrors, "Pas de société");
+        } 
+        if (empty($this->coursSuivis)) {
+            array_push($listOfErrors, "Pas de cours suivis");
+        } 
+        if (empty($this->niveau)) {
+            array_push($listOfErrors, "Pas de niveau");
+        } 
+        if (empty($this->dateInscription)) {
+            array_push($listOfErrors, "Pas de date d'inscription");
+        };
+
+        // exception in case of any attribute is missing
+        if (!empty($listOfErrors)){
+            var_dump($listOfErrors);
+            throw new Exception("C'est la merde");
+        }
+
+        // array to string
+        // Array can't be returned as string without convertion
+        $cours = \join(",", $this->coursSuivis);
+
+        // DateTime object to string
+        $dateTime = $this->dateInscription->format("d-m-Y");
+
+        // convert to string
         $newResume = 
             $this->id." ".
             $this->nom." ".
@@ -42,39 +87,35 @@ class Etudiant extends Personne {
             $this->codePostal." ".
             $this->pays." ".
             $this->societe." ".
-            $this->coursSuivis." ".
+            $cours." ".
             $this->niveau." ".
-            $this->dateInscription;
+            $dateTime;
 
-        $listOfErrors = [];
-        if (empty($this->nom)) {
-            array_push($listOfErrors, "Pas de nom");
-        } elseif (empty($this->prenom)) {
-            array_push($listOfErrors, "Pas de prénom");
-        } elseif (empty($this->adresse)) {
-            array_push($listOfErrors, "Pas d'addresse'");
-        } elseif (empty($this->codePostal)) {
-            array_push($listOfErrors, "Pas de code postal");
-        } elseif (empty($this->pays)) {
-            array_push($listOfErrors, "Pas de pays");
-        } elseif (empty($this->societe)) {
-            array_push($listOfErrors, "Pas de société");
-        } elseif (empty($this->coursSuivis)) {
-            array_push($listOfErrors, "Pas de cours suivis");
-        } elseif (empty($this->niveau)) {
-            array_push($listOfErrors, "Pas de niveau");
-        } elseif (empty($this->dateInscription)) {
-            array_push($listOfErrors, "Pas de date d'inscription");
-        };
-        
+        // return string
+        return $newResume;
+    }
+    // méthode __toString
+    public function __toString(){
+        return $this->resume();
+    }
 
-        // exception in case of any attribute is missing
-        if (empty($listOfErrors)){
-            echo $newResume;
-        } else {
-            var_dump($listOfErrors);
-            throw new Exception("C'est la merde");
-        }
+    // implement interface
+    public function afficheTableau(): array {
+        $tableau = [
+            "nom" => $this->nom,
+            "prenom" => $this->prenom,
+            "adresse" => $this->adresse,
+            "codePostal" => $this->codePostal,
+            "pays" => $this->pays,
+            "societe" => $this->societe,
+            "coursSuivis" => $this->coursSuivis,
+            "niveau" => $this->niveau,
+            "dateInscription" => $this->dateInscription
+        ];
+        return $tableau;
+    }
+    public function afficheLigne(): string {
+        $string = $this->__toString();
+        return $string;
     }
 }
-?>
