@@ -25,15 +25,20 @@ use Poo\HeritageComposer\Manager\EtudiantManager;
     // edit etudiant
     if(isset($_POST['submit'])){
         try{
-            $etudiant->setName( $_POST['name']);
-            $etudiant->setPrenom( $_POST['prenom']);
-            $etudiant->setAdresse( $_POST['adresse']);
-            $etudiant->setPostalCode( $_POST['codePostal']);
-            $etudiant->setPays( $_POST['pays']);
-            $etudiant->setSociete( $_POST['societe']);
-            $etudiant->setCoursSuivis( $_POST['coursSuivis']);
-            $etudiant->setDateInscription( $_POST['dateInscription']);
-            $etudiant->setNiveau( $_POST['niveau']);
+            $etudiant->setName($_POST['name']);
+            $etudiant->setPrenom($_POST['prenom']);
+            $etudiant->setAdresse($_POST['adresse']);
+            $etudiant->setPostalCode($_POST['codePostal']);
+            $etudiant->setPays($_POST['pays']);
+            $etudiant->setSociete($_POST['societe']);
+            $arrayEtudiant = [$_POST['coursSuivis']]; 
+            $etudiant->setCoursSuivis($arrayEtudiant);
+            // creating dateTime format based on string as requested by Entity/Etudiant
+            $etudiantDateTimeExplode = explode('-',$_POST['dateInscription']);
+            $etudiantDateTimeCreation = new DateTime();
+            $etudiantDateTimeCreation = $etudiantDateTimeCreation->setdate($etudiantDateTimeExplode[0], $etudiantDateTimeExplode[1], $etudiantDateTimeExplode[2]);
+            $etudiant->setDateInscription($etudiantDateTimeCreation);
+            $etudiant->setNiveau($_POST['niveau']);
             $etudiantManager->create($etudiant);
         }
         catch(\Exception $e){
@@ -66,7 +71,7 @@ use Poo\HeritageComposer\Manager\EtudiantManager;
             echo '<input class="form-control" type="text" value="" name="coursSuivis" id="coursSuivis" required">';
             echo '<br>';
             echo '<label for="dateInscription">Date inscription</label>';
-            echo '<input class="form-control" type="text" value="" name="dateInscription" id="dateInscription" required">';
+            echo '<input class="form-control" type="date" value="" name="dateInscription" id="dateInscription" required">';
             echo '<br>';
             echo '<label for="niveau">Niveau</label>';
             echo '<input class="form-control" type="text" value="" name="niveau" id="niveau" required">';
