@@ -4,6 +4,7 @@ require 'vendor/autoload.php';
 use Poo\HeritageComposer\Entity\Etudiant;
 use Poo\HeritageComposer\Entity\Enseignant;
 use Poo\HeritageComposer\Manager\EnseignantManager;
+use Poo\HeritageComposer\Manager\EtudiantManager;
 
 // élève
 try {
@@ -29,13 +30,17 @@ try {
     echo $newEtudiant;
     echo "<br>";
 
+    // create object EtudiantManager
+    $etudiantManager = new EtudiantManager();
+    $etudiantManager->create($newEtudiant);
+
 } catch (Exception $e) {
     echo $e->getMessage();
 }
 
-// enseignant
+/*// enseignant
 try {
-    // Créer un nouvel enseigna,t
+    // Créer un nouvel enseignant
     $newEnseignant = new Enseignant();
 
     // Affecter les valeurs aux propriétés de l'étudiant
@@ -65,5 +70,4 @@ try {
 } catch (Exception $e) {
     echo $e->getMessage();
 }
-
-?>
+*/

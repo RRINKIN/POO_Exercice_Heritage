@@ -72,11 +72,20 @@ class Etudiant extends Personne implements Affichable {
         }
 
         // array to string
-        // Array can't be returned as string without convertion
-        $cours = \join(",", $this->coursSuivis);
+        // coursSuivis from array to string using join
+        $data = $this->coursSuivis;
+        if(\gettype($data) == 'string') {
+            $data = unserialize($data);
+        }
+        $newCoursSuivis = \join(",", $data);
 
-        // DateTime object to string
-        $dateTime = $this->dateInscription->format("d-m-Y");
+        // dateInscription from DateTime object to string using format
+        $data = $this->dateInscription;
+        if(\gettype($data) == 'string') {
+            $data = DateTime::createFromFormat('Y-m-d', $data);
+        }
+        $newEntreeService = $data->format("d-m-Y");
+
 
         // convert to string
         $newResume = 
@@ -87,9 +96,9 @@ class Etudiant extends Personne implements Affichable {
             $this->codePostal." ".
             $this->pays." ".
             $this->societe." ".
-            $cours." ".
+            $newCoursSuivis." ".
             $this->niveau." ".
-            $dateTime;
+            $newEntreeService;
 
         // return string
         return $newResume;
